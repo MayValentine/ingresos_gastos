@@ -4,21 +4,31 @@
     <form action="/nuevo" method="post">
     
         <label for="date">Fecha</label>
-        <input type="date" name="date" id="date" required>
+        <input type="date" name="date" 
+               value="{{ dataForm.date }}" required> <br><br>
 
         <label for="concept">Concepto</label>
-        <input type="text" name="concept" id="concept">
+        <input type="text" name="concept" id="concept"
+               placeholder="Introduce en que te has gastado la pasta"
+               value="{{ dataForm.concept }}"> <br><br>
 
         <label for="quantity">Cantidad</label>
-        <input type="number" name="quantity" id="quantity" placeholder="Euros gastados o ingresados" step="0.01">
+        <input type="number" name="quantity" id="quantity" 
+               placeholder="Euros gastados o ingresados" step="0.01"
+               value="{{ dataForm.quantity }}"> <br><br>
 
 
         <input type="submit" value="Aceptar">
 
-</form>
+    </form>
+    <article class="errores">
+            <ul>
+                {% for error in msgErrors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+    </article>
 
 <a href="/">Volver</a>
-
-
 
 {% endblock %}

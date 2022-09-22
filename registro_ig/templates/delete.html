@@ -1,7 +1,23 @@
 {% extends "base.html" %}
 {% block pageContent %}
-    <h1>Baja de Ingreso-Gasto</h1>
-    <p>En construcción borrado de datos</p>
-    <a href="/">Volver</a>
+    
+    <table>
+       <tr>
+        <td>Fecha</td>
+        <td>{{ registro[1] }}</td>
+       </tr>
+       <tr>
+        <td>Concepto</td>
+        <td>{{ registro[2] }}</td>
+       </tr>
+       <tr>
+        <td>Cantidad</td>
+        <td>{{ registro[3] }}</td>
+       </tr>
+    </table>
+    <form action="/delete/{{ registro[0] }}" method="post">
+        <input type="submit" value="Aceptar">
+    </form>
+
 
 {% endblock %}
