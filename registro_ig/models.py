@@ -84,4 +84,23 @@ def insert(registro):
 
     saveLastId(id)
 
+
+def update_by(id, registro_mod):
+    fichero_old = open(MOVIMIENTOS_FILE, "r")
+    fichero = open(NEW_FILE, "w", newline="")
+    csvReader = csv.reader(fichero_old, delimiter=',', quotechar='"')
+    csvWriter = csv.writer(fichero, delimiter=',', quotechar='"')
+
+    for registro in csvReader:
+        if registro[0] != registro_mod[0]:
+            csvWriter.writerow(registro)
+        else:
+            csvWriter.writerow(registro_mod)
+
+    fichero_old.close()
+    fichero.close()
+
+    os.remove(MOVIMIENTOS_FILE)
+    os.rename(NEW_FILE, MOVIMIENTOS_FILE)
+
     

@@ -4,7 +4,7 @@ from flask import render_template, request, redirect, url_for
 import csv
 from datetime import date
 import os
-from registro_ig.models import delete_by, insert, select_all, select_by, insert
+from registro_ig.models import delete_by, insert, select_all, select_by, insert, update_by
 
 
 @app.route("/")
@@ -35,6 +35,10 @@ def alta():
         else:
             return render_template("new.html", pageTitle="Alta", msgErrors=errores, dataForm=dict(request.form))
 
+def form_to_list(id, form):
+    return [str(id), form["date"], form["concept"], form["quantity"]]
+
+
 def validaFormulario(camposFormulario):
     errores = []
     hoy = date.today().isoformat()
@@ -59,8 +63,8 @@ def modifica(id):
         1. Consultar en movimientos.tx y recuperar el registro con id al de la peticion
         2. Devolver el formulario html con los datos de mi registro
         """
-
-        return render_template("modifica.html", registro=[])
+        register = select_by(id)
+        return render_template("update.html", registro=register, pageTitle = "Modificar")
     else:
         """
         1. Validar registro de entrada
@@ -68,7 +72,13 @@ def modifica(id):
         3. redirect
         4. Si el registro es incorrecto la gestion de errores que conocemos
         """
-        pass
+        errores = validaFormulario(request.form)
+        
+        if not errores:
+            update_by(id, form_to_list(id, request.form))
+            return redirect(url_for("index"))
+        else:
+            return render_template("update.html", registro=form_to_list(id, request.form), pageTitle = "Modificar")
 
 
 @app.route("/delete/<int:id>", methods=["GET", "POST"])
@@ -90,12 +100,4 @@ def borrar(id):
         delete_by(id)
         return redirect(url_for("index"))
 
-        
-
-
-
-
-
-@app.route("/modification")
-def modificacion():
-    return render_template("modification.html", pageTitle="Modificacion")         
+                
