@@ -78,7 +78,7 @@ def modifica(id):
             update_by(id, form_to_list(id, request.form))
             return redirect(url_for("index"))
         else:
-            return render_template("update.html", registro=form_to_list(id, request.form), pageTitle = "Modificar")
+            return render_template("update.html", registro=form_to_list(id, request.form), pageTitle = "Modificar", msgErrors=errores)
 
 
 @app.route("/delete/<int:id>", methods=["GET", "POST"])

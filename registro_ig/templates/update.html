@@ -5,7 +5,7 @@
     <form action="/modificar/{{ registro[0] }}" method="post">
     
         <label for="date">Fecha</label>
-        <input type="date" name="date" 
+        <input type="date" name="date" id="date"
                value="{{ registro[1] }}" required> <br><br>
 
         <label for="concept">Concepto</label>
@@ -22,11 +22,11 @@
 
     </form>
     <article class="errores">
-        <ul>
+            <ul>
                 {% for error in msgErrors %}
-                <li>{{ error }}</li>
+                <li class="error">{{ error }}</li>
                 {% endfor %}
-        </ul>
+            </ul>
     </article>
 
 {% endblock %}
